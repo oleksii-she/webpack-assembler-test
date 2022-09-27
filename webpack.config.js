@@ -10,7 +10,7 @@ console.log(mode + " mode");
 module.exports = {
   mode: mode,
   entry: {
-    scripts: "./src/index.js",
+    scripts: ["@babel/polyfill", "./src/index.jsx"],
   },
   output: {
     filename: "[name].[contenthash].js",
@@ -30,6 +30,9 @@ module.exports = {
       chunks: "all",
     },
   },
+  // resolve: {
+  //   extensions: ["*", ".js", ".jsx", ".scss"],
+  // },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
@@ -82,14 +85,9 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
       },
       {
-        test: /\.m?js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          // options: {
-          //     presets: ['@babel/preset-env']
-          // }
-        },
+        use: ["babel-loader"],
       },
     ],
   },
